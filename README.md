@@ -2,25 +2,67 @@
 
 A Jekyll plugin to add [Web Monetization API](https://webmonetization.org/) payment pointers to your site.
 
+## Web Monetization
+
+A JavaScript browser API which allows the creation of a payment stream from the user agent to the website.
+
+[Find out more about Web Monetization](https://webmonetization.org/).
+
+### Payment pointer
+
+To use this plugin and receive payments from Web Monetization you will need a payment pointer. A payment pointer is an address at which you can receive streaming payments from the Web Monetization API. You can set up a payment pointer by creating a digital wallet with [one of the providers listed on the Web Monetization API site](https://webmonetization.org/docs/ilp-wallets).
+
+You can read more about [payment pointers](https://paymentpointers.org/) and [receiving money from Web Monetization](https://webmonetization.org/docs/receiving) in the relevant documentation.
+
 ## Installation
 
-Add this line to your application's Gemfile:
+Add the gem to the `:jekyll_plugins` group in your Jekyll site's Gemfile:
 
 ```ruby
-gem 'jekyll-web_monetization'
+group :jekyll_plugins do
+  gem 'jekyll-web_monetization'
+end
 ```
 
-And then execute:
+Execute:
 
-    $ bundle install
+```bash
+  $ bundle install
+```
 
-Or install it yourself as:
+Then in your site's `_config.yml` add the plugin to the plugins list:
 
-    $ gem install jekyll-web_monetization
+```yml
+plugins:
+  - jekyll/web_monetization
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Once you have a payment pointer, add it to your site settings in `_config.yml`:
+
+```yml
+payment_pointer: $securewallet.example/~alice
+```
+
+Also, add the `web_monetization` liquid tag to the `<head>` of your layout.
+
+```html
+<head>
+  <!-- other tags in the head -->
+  {% web_monetization %}
+</head>
+```
+
+The site-wide payment pointer will be added to all pages on which you use the liquid tag.
+
+If you have multiple authors, you can set a payment pointer per post or page in the YAML front matter. This will over-ride the site-wide payment pointer for that page.
+
+```yml
+---
+payment_pointer: $securewallet.example/~bob
+---
+```
 
 ## Development
 
@@ -30,8 +72,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jekyll-web_monetization. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/jekyll-web_monetization/blob/master/CODE_OF_CONDUCT.md).
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/philnash/jekyll-web_monetization. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](./CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -39,4 +80,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Jekyll::Web::Monetization project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/jekyll-web_monetization/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Jekyll::Web::Monetization project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](./CODE_OF_CONDUCT.md).
