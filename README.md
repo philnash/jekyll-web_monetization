@@ -2,6 +2,8 @@
 
 A Jekyll plugin to add [Web Monetization API](https://webmonetization.org/) payment pointers to your site.
 
+[![Build Status](https://travis-ci.org/philnash/jekyll-web_monetization.svg?branch=master)](https://travis-ci.org/philnash/jekyll-web_monetization)
+
 ## Web Monetization
 
 A JavaScript browser API which allows the creation of a payment stream from the user agent to the website.
