@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "json"
 
 module Jekyll
   module WebMonetization
@@ -6,10 +7,48 @@ module Jekyll
       def render(context)
         site_payment_pointer = context.registers[:site].config["payment_pointer"]
         page_payment_pointer = context.registers[:page]["payment_pointer"] || site_payment_pointer
-        if page_payment_pointer
+        if page_payment_pointer.is_a?(Array) 
+          pointers_with_weights = array_to_object(page_payment_pointer)
+          return javascript(pointers_with_weights)
+        elsif page_payment_pointer.is_a?(Hash)
+          return javascript(page_payment_pointer)
+        elsif page_payment_pointer.is_a?(String)
           "<meta name='monetization' content='#{page_payment_pointer}'>"
         end
       end
+
+      private
+
+      def array_to_object(pointers)
+        pointers.reduce({}) { |acc, pointer| acc[pointer] = 1; acc }
+      end
+
+      def javascript(pointers_with_weights)
+        sum = pointers_with_weights.reduce(0) { |acc, (pointer, weight)| acc + weight }
+        pointers = JSON.generate(pointers_with_weights)
+        script = <<~JAVASCRIPT
+          <script>
+            (function() {
+              function pickPointer(pointers, sum) {
+                let choice = Math.random() * sum;
+                for (const pointer in pointers) {
+                  const weight = pointers[pointer];
+                  if ((choice -= weight) <= 0) {
+                    return pointer;
+                  }
+                }
+              }
+            
+              window.addEventListener("load", function() {
+                const tag = document.createElement("meta");
+                tag.name = "monetization";
+                tag.content = pickPointer(#{pointers}, #{sum});
+                document.head.appendChild(tag);
+              });
+            })();
+          </script>
+        JAVASCRIPT
+      end 
     end
   end
 end

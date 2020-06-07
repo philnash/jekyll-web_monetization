@@ -66,6 +66,38 @@ payment_pointer: $securewallet.example/~bob
 ---
 ```
 
+### Probabilistic Revenue Sharing
+
+A site, page or post may be the work of more than one person. This plugin supports providing more than one payment pointer to enable [probabilistic revenue sharing](https://webmonetization.org/docs/probabilistic-rev-sharing).
+
+If, in your `_config.yml` or front matter for any page, you provide an array of payment pointers or a hash of payment pointers and weights, then the plugin will generate JavaScript to choose a payment pointer on each page load.
+
+#### Array of payment pointers
+
+You can define an array of payment pointers like this:
+
+```yml
+payment_pointer:
+  - $securewallet.example/~alice
+  - $securewallet.example/~bob
+```
+
+Each payment pointer will be given an equal chance of appearing on the page each page load.
+
+#### Hash of payment pointers and weights
+
+You can also give payment pointers different weights. They will then appear on the page in a ratio based on the total weights.
+
+You define this hash of payment pointers and weights like this:
+
+```yml
+payment_pointer:
+  $securewallet.example/~alice: 20
+  $securewallet.example/~bob: 10
+```
+
+In this case, Alice's pointer will be added to the page twice as often as Bob's.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
