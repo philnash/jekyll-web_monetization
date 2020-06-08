@@ -2,7 +2,7 @@
 
 A Jekyll plugin to add [Web Monetization API](https://webmonetization.org/) payment pointers to your site.
 
-[![Build Status](https://travis-ci.org/philnash/jekyll-web_monetization.svg?branch=master)](https://travis-ci.org/philnash/jekyll-web_monetization)
+[![Gem Version](https://badge.fury.io/rb/jekyll-web_monetization.svg)](https://badge.fury.io/rb/jekyll-web_monetization) [![Build Status](https://travis-ci.org/philnash/jekyll-web_monetization.svg?branch=master)](https://travis-ci.org/philnash/jekyll-web_monetization) [![Maintainability](https://api.codeclimate.com/v1/badges/9a29d485942538c525dc/maintainability)](https://codeclimate.com/github/philnash/jekyll-web_monetization/maintainability) [![Inline docs](http://inch-ci.org/github/philnash/jekyll-web_monetization.svg?branch=master)](http://inch-ci.org/github/philnash/jekyll-web_monetization)
 
 ## Web Monetization
 
