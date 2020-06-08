@@ -11,3 +11,5 @@
 .rspec_status
 
 .jekyll-cache
+
+Gemfile.lock
