@@ -7,17 +7,26 @@ module Jekyll
       def render(context)
         site_payment_pointer = context.registers[:site].config["payment_pointer"]
         page_payment_pointer = context.registers[:page]["payment_pointer"] || site_payment_pointer
-        if page_payment_pointer.is_a?(Array) 
-          pointers_with_weights = array_to_object(page_payment_pointer)
-          return javascript(pointers_with_weights)
+
+        if page_payment_pointer.is_a?(Array)
+          if page_payment_pointer.length == 1
+            pointer_to_html(page_payment_pointer[0])
+          else
+            pointers_with_weights = array_to_object(page_payment_pointer)
+            return javascript(pointers_with_weights)
+          end
         elsif page_payment_pointer.is_a?(Hash)
           return javascript(page_payment_pointer)
         elsif page_payment_pointer.is_a?(String)
-          "<meta name='monetization' content='#{page_payment_pointer}'>"
+          pointer_to_html(page_payment_pointer)
         end
       end
 
       private
+
+      def pointer_to_html(pointer)
+        return "<meta name='monetization' content='#{pointer}'>"
+      end
 
       def array_to_object(pointers)
         pointers.reduce({}) { |acc, pointer| acc[pointer] = 1; acc }
@@ -38,7 +47,7 @@ module Jekyll
                   }
                 }
               }
-            
+
               window.addEventListener("load", function() {
                 const tag = document.createElement("meta");
                 tag.name = "monetization";
@@ -48,7 +57,7 @@ module Jekyll
             })();
           </script>
         JAVASCRIPT
-      end 
+      end
     end
   end
 end
